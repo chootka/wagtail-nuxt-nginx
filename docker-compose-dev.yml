@@ -1,0 +1,72 @@
+version: '3.7'
+
+networks:
+  dockernet:
+
+services:
+  nginx:
+    build: 
+      context: ./nginx
+      dockerfile: Dockerfile.dev
+    restart: unless-stopped
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./cms/cms/static:/cms/static
+      - /etc/letsencrypt:/etc/letsencrypt
+    depends_on:
+      - nuxt
+    networks:
+      dockernet:
+          aliases:
+              - nginx
+  nuxt:
+    restart: always
+    build: 
+      context: ./nuxt
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./nuxt:/app
+      - /app/node_modules
+      - /app/.nuxt
+    expose:
+      - 3000
+    depends_on:
+      - cms
+    links:
+      - cms
+    networks:
+      dockernet:
+          aliases:
+              - nuxt
+
+  cms:
+    env_file: .env
+    restart: always
+    build: ./cms
+    entrypoint: /usr/bin/entrypoint.sh
+    expose:
+      - 8000
+    working_dir: /app
+    volumes:
+      - ./cms:/app
+      - ./cms/entrypoint.sh:/usr/bin/entrypoint.sh
+    extra_hosts:
+      - 'postgres:172.17.0.1'
+    networks:
+      dockernet:
+          aliases:
+              - cms
+
+  certbot:
+    restart: unless-stopped
+    image: certbot/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    volumes:
+      - ./etc/letsencrypt:/etc/letsencrypt
+    networks:
+      dockernet:
+          aliases:
+              - certbot
