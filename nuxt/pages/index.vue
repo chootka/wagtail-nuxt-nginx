@@ -5,7 +5,7 @@
     </div>
     <div class="text-wrapper">
       <h2>
-        Heading
+        {{ title }}
       </h2>
       <p>
         Body text
@@ -53,16 +53,16 @@ export default {
       return imageData;
     },
     getData () {
-      // this.$axios.get('/api/v2/pages/5/?fields=_,title,body')
-      //   .then(async (response) => {
+      this.$axios.get('/api/v2/pages/2/?fields=_,title')
+        .then(async (response) => {
 
-      //     const res = response.data;
-      //     this.title = res.title;
-      //     this.images = await this.getImages(res.body)
-      //   })
-      //   .catch((err) => {
-      //     console.log("error getting about data");
-      //   })
+          const res = response.data;
+          this.title = res.title;
+          // this.images = await this.getImages(res.body)
+        })
+        .catch((err) => {
+          console.log("error getting about data");
+        })
     }
   }
 }

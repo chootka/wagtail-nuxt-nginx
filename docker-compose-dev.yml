@@ -12,10 +12,8 @@ services:
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
     ports:
       - 80:80
-      - 443:443
     volumes:
       - ./cms/cms/static:/cms/static
-      - /etc/letsencrypt:/etc/letsencrypt
     depends_on:
       - nuxt
     networks:
@@ -53,8 +51,8 @@ services:
     volumes:
       - ./cms:/app
       - ./cms/entrypoint.sh:/usr/bin/entrypoint.sh
-    extra_hosts:
-      - 'postgres:172.17.0.1'
+#    extra_hosts:
+#      - 'postgres:172.17.0.1'
     networks:
       dockernet:
           aliases:

@@ -27,7 +27,7 @@ function syncPageTranslationFields () {
   python3 manage.py sync_page_translation_fields
 }
 
-waitForPostgres
+#waitForPostgres
 migrateTables
 loadStatics
 gunicorn --bind 0.0.0.0:8000 --reload --workers 3 --access-logfile - cms.wsgi:application

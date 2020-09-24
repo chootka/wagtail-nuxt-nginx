@@ -95,13 +95,20 @@ WSGI_APPLICATION = 'cms.wsgi.application'
 
 DATABASES = {
     'default': {
-       'ENGINE': 'django.db.backends.postgresql_psycopg2',
-       'NAME': os.environ.get('POSTGRES_DB'),
-       'USER': os.environ.get('POSTGRES_USER'),
-       'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-       'HOST': os.environ.get('DATABASE_URL')
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'mydatabase',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#        'NAME': os.environ.get('POSTGRES_DB'),
+#        'USER': os.environ.get('POSTGRES_USER'),
+#        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+#        'HOST': os.environ.get('DATABASE_URL')
+#     }
+# }
 
 
 # Password validation

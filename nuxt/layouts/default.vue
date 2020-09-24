@@ -1,23 +1,21 @@
 <template>
   <div class="wrapper">
-    <div class="container">
-      <nav
-        class="navbar header is-primary"
-        role="navigation"
-        aria-label="main navigation"
-      >
-        <div class="navbar-brand">
-          <div v-for="(item, key) of globalItems" :key="key">
-            <a v-if="item.external" :href="item.external" class="navbar-item" exact-active-class="is-active">
-              {{ item.title }}
-            </a>
-            <nuxt-link v-else :to="item.to" class="navbar-item" exact-active-class="is-active">
-              {{ item.title }}
-            </nuxt-link>
-          </div>
+    <nav
+      class="navbar header is-primary"
+      role="navigation"
+      aria-label="main navigation"
+    >
+      <div class="navbar-brand">
+        <div v-for="(item, key) of globalItems" :key="key">
+          <a v-if="item.external" :href="item.external" class="navbar-item" exact-active-class="is-active">
+            {{ item.title }}
+          </a>
+          <nuxt-link v-else :to="item.to" class="navbar-item" exact-active-class="is-active">
+            {{ item.title }}
+          </nuxt-link>
         </div>
-      </nav>
-    </div>
+      </div>
+    </nav>
     <div id="content" class="container">
       <Nuxt />
     </div>
@@ -73,10 +71,9 @@ body {
 }
 .navbar.is-primary {
   background: #000;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
+  display: flex;
+  align-content: center;
+  padding: 1.5em;
 }
 .navbar-brand {
   display: flex;
@@ -86,14 +83,14 @@ a.navbar-item,
 .navbar-link.is-active,
 a.navbar-item.is-active {
   color: #fff;
-  margin-left: 30px;
+  margin-right: 30px;
 }
 .navbar-link.is-active,
 a.navbar-item.is-active {
   text-decoration: line-through;
 }
 #content {
-  margin-top: 80px;
+  margin-top: 30px;
 }
 .footer {
   display: flex;
